@@ -1,0 +1,10 @@
+// Svencraft: Minecraft-style co-op built on Xash3D FWGS with Sven Co-op's content
+game		"Svencraft"
+title		"Svencraft"
+version		"0.1"
+basedir		"svencoop"
+gamedir		"svencraft"
+startmap	"svencraft_sandbox"
+gamedll		"dlls/hl.dll"
+type		"multiplayer_only"
+mpentity	"info_player_deathmatch"

@@ -1,0 +1,13 @@
+{
+ "input": "CesiumMan.glb",
+ "name": "sc_fptest",
+ "target_tris": 2000,
+ "tex_size": 256,
+ "transform": {"rotate": [0, 0, 0], "scale": 39.37, "offset": [0, 0, 0]},
+ "sequences": [
+  {"name": "idle", "range": [0, 0], "fps": 30, "loop": true},
+  {"name": "walk", "range": [0, 48], "fps": 30, "loop": true, "events": [[0, 5004, "common/null.wav"]]}
+ ],
+ "attachments": [{"bone": "Skeleton_neck_joint_1", "offset": [0, 0, 4]}],
+ "credit": "Cesium Man (c) 2017 Cesium, CC BY 4.0 (Khronos glTF-Sample-Assets), pipeline test only"
+}

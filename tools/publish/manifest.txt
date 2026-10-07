@@ -1,0 +1,76 @@
+# Svencraft export manifest: which files of the working tree go into the GitHub repo (read by export.py).
+# Paths are relative to the project root, with '/' separators.
+#   + <glob>     include the files matching the glob (* = within one folder, ** = any depth)
+#   - <glob>     exclude matching files, whichever rule included them (git clones too)
+#   git <dir>    a nested git clone: its tracked files as they are on disk (deleted ones skipped) plus the
+#                untracked files git does not ignore; its submodules become gitlinks in the export repo
+# A file is exported when it matches a + or git rule and no - rule. Everything else (run/'s engine package and
+# generated assets, build folders, deps/, dl/, maps_src outputs) is rebuilt from these sources: docs/BUILDING.md.
+
+# --- top level
++ README.md
++ DEVLOG.md
++ DESIGN.md
++ Play Svencraft.bat
++ .gitignore
++ .gitattributes
+
+# --- documentation (the town_v3 contact sheets are excluded below)
++ docs/**
+
+# --- tools: generators, build/test scripts, the publishing kit
++ tools/*.py
++ tools/*.sh
++ tools/*.ps1
++ tools/publish/**
++ tools/fpmodel/*.py
++ tools/fpmodel/*.json
++ tools/fpmodel/test/*.json
+
+# --- map sources (their outputs: .map .bsp .dyn .wad ... are generated)
++ maps_src/*.py
+
+# --- hand-kept source art, and the old prototype
++ assets_src/**
++ legacy/**
+
+# --- run/svencraft: hand-maintained files
++ run/svencraft/gameinfo.txt
++ run/svencraft/listenserver.cfg
++ run/svencraft/server.cfg
++ run/svencraft/motd.txt
++ run/svencraft/userconfig.d/*.cfg
++ run/svencraft/sprites/weapon_sc_*.txt
++ run/svencraft/delta.lst
++ run/svencraft/events/*.sc
+# prebuilt original art from the prototype's sprite scripts (legacy/angelscript_mod/build/sprites/); no current
+# generator makes these
++ run/svencraft/sprites/svencraft/counts.spr
++ run/svencraft/sprites/svencraft/cracks.spr
++ run/svencraft/sprites/svencraft/craftpanel_l.spr
++ run/svencraft/sprites/svencraft/craftpanel_r.spr
++ run/svencraft/sprites/svencraft/craftslots.spr
++ run/svencraft/sprites/svencraft/cursor.spr
++ run/svencraft/sprites/svencraft/sctools.spr
++ run/svencraft/sprites/svencraft/sctools_s.spr
++ run/svencraft/sprites/svencraft/slot.spr
++ run/svencraft/sprites/svencraft/slot_sel.spr
+
+# --- the engine and game forks (our changes live uncommitted in these upstream clones)
+git engine
+git game
+
+# --- never
+- **/__pycache__/**
+- **/*.pyc
+- **/.lock-waf*
+# one-off source patches, already applied to engine/ and game/
+- tools/patch_*.py
+# the audit's local list of personal strings
+- tools/publish/*.local.txt
+# previews written by the assets_src generators
+- assets_src/**/_preview_*.png
+- assets_src/**/_sheet.png
+- assets_src/**/_ores.png
+# contact sheets of Sven Co-op / Half-Life textures: not ours (regenerate with tools/wadtex.py sheet ...)
+- docs/town_v3_*.png

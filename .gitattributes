@@ -1,0 +1,5 @@
+# Store every file byte for byte, with no line-ending conversion. The tree mixes CRLF files (edited on Windows,
+# and the hlsdk-portable checkout) with LF files, and none of the tools care; converting would only make the
+# repo differ from the working tree. engine/.gitattributes still applies inside engine/ (text eol=lf for *.c,
+# *.h and wscript, which are LF on disk already, so those stay byte-identical too).
+* -text

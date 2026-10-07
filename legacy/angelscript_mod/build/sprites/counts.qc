@@ -1,0 +1,111 @@
+$spritename counts
+$type vp_parallel
+$texture alphatest
+$load counts_0.bmp
+$frame 0 0 56 56
+$frame 56 0 56 56
+$frame 112 0 56 56
+$frame 168 0 56 56
+$frame 0 56 56 56
+$frame 56 56 56 56
+$frame 112 56 56 56
+$frame 168 56 56 56
+$frame 0 112 56 56
+$frame 56 112 56 56
+$frame 112 112 56 56
+$frame 168 112 56 56
+$frame 0 168 56 56
+$frame 56 168 56 56
+$frame 112 168 56 56
+$frame 168 168 56 56
+$load counts_1.bmp
+$frame 0 0 56 56
+$frame 56 0 56 56
+$frame 112 0 56 56
+$frame 168 0 56 56
+$frame 0 56 56 56
+$frame 56 56 56 56
+$frame 112 56 56 56
+$frame 168 56 56 56
+$frame 0 112 56 56
+$frame 56 112 56 56
+$frame 112 112 56 56
+$frame 168 112 56 56
+$frame 0 168 56 56
+$frame 56 168 56 56
+$frame 112 168 56 56
+$frame 168 168 56 56
+$load counts_2.bmp
+$frame 0 0 56 56
+$frame 56 0 56 56
+$frame 112 0 56 56
+$frame 168 0 56 56
+$frame 0 56 56 56
+$frame 56 56 56 56
+$frame 112 56 56 56
+$frame 168 56 56 56
+$frame 0 112 56 56
+$frame 56 112 56 56
+$frame 112 112 56 56
+$frame 168 112 56 56
+$frame 0 168 56 56
+$frame 56 168 56 56
+$frame 112 168 56 56
+$frame 168 168 56 56
+$load counts_3.bmp
+$frame 0 0 56 56
+$frame 56 0 56 56
+$frame 112 0 56 56
+$frame 168 0 56 56
+$frame 0 56 56 56
+$frame 56 56 56 56
+$frame 112 56 56 56
+$frame 168 56 56 56
+$frame 0 112 56 56
+$frame 56 112 56 56
+$frame 112 112 56 56
+$frame 168 112 56 56
+$frame 0 168 56 56
+$frame 56 168 56 56
+$frame 112 168 56 56
+$frame 168 168 56 56
+$load counts_4.bmp
+$frame 0 0 56 56
+$frame 56 0 56 56
+$frame 112 0 56 56
+$frame 168 0 56 56
+$frame 0 56 56 56
+$frame 56 56 56 56
+$frame 112 56 56 56
+$frame 168 56 56 56
+$frame 0 112 56 56
+$frame 56 112 56 56
+$frame 112 112 56 56
+$frame 168 112 56 56
+$frame 0 168 56 56
+$frame 56 168 56 56
+$frame 112 168 56 56
+$frame 168 168 56 56
+$load counts_5.bmp
+$frame 0 0 56 56
+$frame 56 0 56 56
+$frame 112 0 56 56
+$frame 168 0 56 56
+$frame 0 56 56 56
+$frame 56 56 56 56
+$frame 112 56 56 56
+$frame 168 56 56 56
+$frame 0 112 56 56
+$frame 56 112 56 56
+$frame 112 112 56 56
+$frame 168 112 56 56
+$frame 0 168 56 56
+$frame 56 168 56 56
+$frame 112 168 56 56
+$frame 168 168 56 56
+$load counts_6.bmp
+$frame 0 0 56 56
+$frame 56 0 56 56
+$frame 112 0 56 56
+$frame 168 0 56 56
+$frame 0 56 56 56

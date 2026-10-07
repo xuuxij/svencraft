@@ -1,0 +1,18 @@
+# Vetted exceptions for tools/publish/audit.py: "<check> <path glob>" (check names as audit.py prints them,
+# * = any check). Keep every entry justified; personal data is never allowed, only false positives.
+
+# prebuilt original sprites from the prototype's own scripts (legacy/angelscript_mod/build/sprites/)
+file-type run/svencraft/sprites/svencraft/*.spr
+# the prototype's block WAD: original procedural textures only (legacy/angelscript_mod/build/makesandbox.py)
+file-type assets_src/testmap/svencraft_old.wad
+
+# upstream xash3d-fwgs files, unchanged by us (public upstream content, not personal data)
+claude-path engine/.gitignore
+lan-ip engine/engine/common/ipv6text.c
+lan-ip engine/scripts/sailfish/deploy.sh
+image-meta engine/Documentation/images/*.jpg
+image-meta engine/game_launch/icon-xash-material.png
+
+# the audit's own pattern definitions
+user-path tools/publish/audit.py
+claude-path tools/publish/audit.py

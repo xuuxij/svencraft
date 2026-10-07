@@ -1,0 +1,75 @@
+# Svencraft: what stays out of the repo. The export (tools/publish/export.py) copies only what
+# tools/publish/manifest.txt lists, so this file mostly protects a working clone of the repo.
+
+# Python
+__pycache__/
+*.pyc
+
+# The runtime folder: the engine package, built DLLs, the Sven Co-op link, generated assets and the files the
+# engine writes (config.cfg, video.cfg, opengl.cfg, vfs.cfg, .xash_id, voice_ban.dt, engine.log, scrshots/,
+# .fontcache/, media/cdaudio.txt, maps/graphs/, tests/ from tools/runtest.sh). Only run/svencraft's
+# hand-maintained files and the prebuilt sprites from the old prototype are tracked.
+/run/*
+!/run/svencraft/
+/run/svencraft/*
+!/run/svencraft/gameinfo.txt
+!/run/svencraft/userconfig.d/
+/run/svencraft/userconfig.d/*
+!/run/svencraft/userconfig.d/*.cfg
+!/run/svencraft/sprites/
+/run/svencraft/sprites/*
+!/run/svencraft/sprites/weapon_sc_*.txt
+!/run/svencraft/sprites/svencraft/
+/run/svencraft/sprites/svencraft/*
+!/run/svencraft/sprites/svencraft/counts.spr
+!/run/svencraft/sprites/svencraft/cracks.spr
+!/run/svencraft/sprites/svencraft/craftpanel_l.spr
+!/run/svencraft/sprites/svencraft/craftpanel_r.spr
+!/run/svencraft/sprites/svencraft/craftslots.spr
+!/run/svencraft/sprites/svencraft/cursor.spr
+!/run/svencraft/sprites/svencraft/sctools.spr
+!/run/svencraft/sprites/svencraft/sctools_s.spr
+!/run/svencraft/sprites/svencraft/slot.spr
+!/run/svencraft/sprites/svencraft/slot_sel.spr
+
+# Generator work folders and test screenshots
+/tools/build_*/
+/tools/shots/
+# One-off source patches, already applied to engine/ and game/
+/tools/patch_*.py
+# The audit's local list of personal strings
+/tools/publish/*.local.txt
+
+# Map build outputs (maps_src/*.py generate them; the WADs hold Sven Co-op textures)
+/maps_src/*.map
+/maps_src/*.bsp
+/maps_src/*.dyn
+/maps_src/*.ext
+/maps_src/*.log
+/maps_src/*.prt
+/maps_src/*.wad
+/maps_src/*.wa_
+/maps_src/*.lin
+/maps_src/*.pts
+
+# Previews written by assets_src generators
+/assets_src/**/_preview_*.png
+/assets_src/**/_sheet.png
+/assets_src/**/_ores.png
+
+# Contact sheets of Sven Co-op / Half-Life textures (regenerate with tools/wadtex.py sheet ...)
+/docs/town_v3_*.png
+
+# Local build inputs and outputs (see docs/BUILDING.md)
+/build_engine/
+/deps/
+/dl/
+
+# Engine and game build outputs (their own .gitignore files cover these too)
+/engine/build/
+/game/build/
+.lock-waf*
+waf3-*/
+
+# Export bookkeeping (staging folder only)
+/.export/
