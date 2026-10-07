@@ -22,7 +22,9 @@ no commits newer than our bases (see UPSTREAM.md).
 
 Taken so far: #1 and #2 (merged), #3 (`sc_lagcomp.cpp`), SevenKewp's medkit and revive (`sc_medkit.cpp`, with
 its data repo's skill values), its heavy weapons and robot grunts as the references for ours (`sc_hwgrunt.cpp`,
-`sc_robogrunt.cpp`, on Half-Life's grunt rather than SevenKewp's grunt base).
+`sc_robogrunt.cpp`, on Half-Life's grunt rather than SevenKewp's grunt base), and from #8 its baby gargantua (in
+`gargantua.cpp`), Tor, Kingpin and Stukabat (`sc_tor.cpp`, `sc_kingpin.cpp`, `sc_stukabat.cpp`), rewritten on
+Half-Life's monster base. Left from #8: the bodyguard.
 
 ## Rendering and effects (engine / client)
 

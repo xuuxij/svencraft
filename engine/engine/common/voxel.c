@@ -10,6 +10,7 @@ solid blocks, so everything that collides with the BSP also collides with blocks
 #include "voxel_api.h"
 #include "pm_local.h"
 #include "voxel.h"
+#include "scnet.h"
 
 static vox_world_t vox;
 
@@ -74,6 +75,7 @@ static int GAME_EXPORT Vox_Init( int minx, int miny, int minz, int maxx, int max
 
 	vox.active = true;
 	Con_Reportf( "Vox_Init: %d x %d x %d blocks\n", vox.size[0], vox.size[1], vox.size[2] );
+	SCNet_VoxInit();	// players already in get the new world (scnet.c)
 	return true;
 }
 
@@ -81,6 +83,23 @@ static void GAME_EXPORT Vox_Shutdown( void )
 {
 	Vox_Free();
 	vox.world_rev++;
+}
+
+static void Vox_UpdateHeight( int x, int y );
+
+// the whole world at once (a snapshot from the server, a saved world): blocks x fastest, then y, then z
+qboolean Vox_LoadWorld( const int *mins, const int *maxs, const unsigned char *flags, const unsigned short *blocks )
+{
+	memcpy( vox.flags, flags, sizeof( vox.flags ));
+	if( !Vox_Init( mins[0], mins[1], mins[2], maxs[0], maxs[1], maxs[2] ))
+		return false;
+	memcpy( vox.blocks, blocks, sizeof( *vox.blocks ) * vox.size[0] * vox.size[1] * vox.size[2] );
+	for( int y = vox.mins[1]; y < vox.maxs[1]; y++ )
+		for( int x = vox.mins[0]; x < vox.maxs[0]; x++ )
+			Vox_UpdateHeight( x, y );
+	for( int i = 0; i < vox.nsections[0] * vox.nsections[1] * vox.nsections[2]; i++ )
+		vox.section_rev[i]++;
+	return true;
 }
 
 // a new map is starting: the game builds a new block world if it wants one
@@ -132,6 +151,7 @@ static void GAME_EXPORT Vox_Set( int x, int y, int z, int id )
 	if( *b == id )
 		return;
 	*b = (unsigned short)id;
+	SCNet_VoxSet( x, y, z, id );	// to the players on other machines (scnet.c)
 
 	oldtop = vox.height[( y - vox.mins[1] ) * vox.size[0] + ( x - vox.mins[0] )];
 	if( id && z > oldtop )
@@ -180,6 +200,7 @@ static void GAME_EXPORT Vox_Fill( int x0, int y0, int z0, int x1, int y1, int z1
 	// bulk change: rebuild everything
 	for( x = 0; x < vox.nsections[0] * vox.nsections[1] * vox.nsections[2]; x++ )
 		vox.section_rev[x]++;
+	SCNet_VoxFill( x0, y0, z0, x1, y1, z1, id );
 }
 
 static void GAME_EXPORT Vox_SetFlags( int id, int flags )
@@ -188,12 +209,30 @@ static void GAME_EXPORT Vox_SetFlags( int id, int flags )
 
 	if( id <= 0 || id >= VOX_MAX_IDS )
 		return;
+	if( vox.flags[id] != (unsigned char)flags )
+		SCNet_VoxFlags( id, flags );
 	vox.flags[id] = (unsigned char)flags;
 	if( vox.active )
 	{
 		for( x = 0; x < vox.nsections[0] * vox.nsections[1] * vox.nsections[2]; x++ )
 			vox.section_rev[x]++;
 	}
+}
+
+// the changes that come from the server, on a client of another machine (client/cl_scnet.c)
+void Vox_NetSet( int x, int y, int z, int id )
+{
+	Vox_Set( x, y, z, id );
+}
+
+void Vox_NetFill( int x0, int y0, int z0, int x1, int y1, int z1, int id )
+{
+	Vox_Fill( x0, y0, z0, x1, y1, z1, id );
+}
+
+void Vox_NetFlags( int id, int flags )
+{
+	Vox_SetFlags( id, flags );
 }
 
 static const vox_world_t * GAME_EXPORT Vox_GetWorld( void )
@@ -482,6 +521,10 @@ static vox_api_t vox_api =
 	Vox_GetWorld,
 	Vox_TraceLineAPI,
 	Vox_BoxSolidAPI,
+	SCNet_SaveWorldFile,
+	SCNet_LoadWorldFile,
+	SCNet_WriteFile,
+	SCNet_RenameFile,
 };
 
 EXPORT vox_api_t *Vox_GetAPI( int version );

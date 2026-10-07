@@ -113,6 +113,12 @@ void CHWGrunt::SetActivity( Activity NewActivity )
 {
 	if( NewActivity == ACT_CROUCH || NewActivity == ACT_CROUCHIDLE )
 		NewActivity = ACT_IDLE;
+	if( NewActivity == ACT_IDLE )
+	{
+		// (the grunt's idle in a fight is the angry one, which this model hasn't got: the plain idle)
+		CBaseMonster::SetActivity( ACT_IDLE );
+		return;
+	}
 	bool shooting = NewActivity == ACT_RANGE_ATTACK1 || NewActivity == ACT_IDLE_ANGRY || NewActivity == ACT_SIGNAL1
 		|| NewActivity == ACT_SIGNAL2 || NewActivity == ACT_SIGNAL3;
 	if( !shooting )

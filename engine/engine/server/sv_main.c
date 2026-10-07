@@ -17,6 +17,7 @@ GNU General Public License for more details.
 #include "server.h"
 #include "net_encode.h"
 #include "platform/platform.h"
+#include "scnet.h"
 
 // server cvars
 CVAR_DEFINE_AUTO( sv_lan, "0", 0, "server is a lan server ( no heartbeat, no authentication, no non-class C addresses, 9999.0 rate, etc." );
@@ -705,6 +706,9 @@ void Host_ServerFrame( void )
 
 	// let everything in the world think and move
 	if( !SV_RunGameFrame ()) return;
+
+	// Svencraft: world snapshots again after the block world was made anew, and frozen joiners let go (scnet.c)
+	SCNet_Frame ();
 
 	// send messages back to the clients that had packets read this frame
 	SV_SendClientMessages ();

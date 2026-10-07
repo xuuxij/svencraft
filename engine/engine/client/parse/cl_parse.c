@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include "shake.h"
 #include "input.h"
 #include "eiface.h"
+#include "scnet.h"
 
 #if XASH_LOW_MEMORY != 2
 int CL_UPDATE_BACKUP = SINGLEPLAYER_BACKUP;
@@ -1705,6 +1706,11 @@ void CL_RegisterResources( sizebuf_t *msg, connprotocol_t proto )
 			// load skybox
 			R_SetupSky( clgame.movevars.skyName );
 
+			// Svencraft: on a server of another machine, its diggable geometry (and an empty block world until the
+			// server's snapshot comes: client/cl_scnet.c); on the host's own client the server's is shared
+			if( !SV_Active())
+				SCNet_ClientNewMap();
+
 			// tell rendering system we have a new set of models.
 			ref.dllFuncs.R_NewMap ();
 
@@ -2676,6 +2682,9 @@ void CL_ParseServerMessage( sizebuf_t *msg )
 			break;
 		case svc_deltamovevars:
 			CL_ParseMovevars( msg );
+			break;
+		case svc_scworld:
+			SCNet_ParseEdit( msg );	// Svencraft: a change to the blocks or the dug-out town (client/cl_scnet.c)
 			break;
 		default:
 			CL_ParseUserMessage( msg, cmd, PROTO_CURRENT );

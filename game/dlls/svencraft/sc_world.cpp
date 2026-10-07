@@ -349,6 +349,8 @@ void SC_RegisterCvars( void )
 	SC_RegisterStateCommands();
 	SC_RegisterPlayerCvars();
 	SC_RegisterFogCommands();
+	SC_RegisterSaveCommands();
+	SC_RegisterRiftCvars();
 }
 
 int SC_Relationship( int me, int them, int halfLife )
@@ -403,9 +405,11 @@ void SC_WorldActivate( void )
 		UTIL_Remove( pShadow );
 
 	vox_api_t *v = SC_Vox();
+	bool kept = SC_LoadWorld();	// a world kept from before (sc_save.cpp), or
 	if( !v || !v->World()->active )
 		return;
-	SC_GenerateWorld( v, sc_seed.value != 0 ? (int)sc_seed.value : RANDOM_LONG( 1, 999999 ));
+	if( !kept )
+		SC_GenerateWorld( v, sc_seed.value != 0 ? (int)sc_seed.value : RANDOM_LONG( 1, 999999 ));
 	g_iSCWorldTop = g_iSCBlockTop;
 	g_iSCBlockTop = 0;	// the next map sets its own
 }
@@ -464,6 +468,10 @@ bool SC_PlaceCreature( CBaseEntity *pNew, const Vector &want, edict_t *pIgnore )
 			if( taken )
 				continue;
 			UTIL_SetOrigin( pNew->pev, Vector( mid.x, mid.y, mid.z - half + 1 ));
+			// a turret stands on its origin, its box reaching as far below it as above (Half-Life's): it is set down
+			// on the spot the hull found clear, not dropped or walked
+			if( pNew->pev->movetype == MOVETYPE_FLY && pNew->pev->mins.z < 0.0f )
+				return true;
 			// the engine's own test, the one a monster's start makes ("stuck in wall"): its whole footprint on
 			// ground it can stand on (a voltigore is 160 wide: a curb under one corner is enough to fail)
 			DROP_TO_FLOOR( pNew->edict());
@@ -821,11 +829,26 @@ bool SC_ClientCommand( edict_t *pEntity, const char *pcmd )
 
 	if( !strcmp( pcmd, "sc_hurt" ))
 	{
-		// sc_hurt <amount> [self]   (cheats): hurts what the player looks at (within 2048), or the player
+		// sc_hurt <amount> [self | <classname>]   (cheats): hurts what the player looks at (within 2048), the player,
+		// or every living one of a kind (monster_stukabat: what is hard to aim at, a flyer, one round a corner)
 		if( g_enable_cheats->value == 0 || CMD_ARGC() < 2 )
 			return true;
+		if( CMD_ARGC() >= 3 && strcmp( CMD_ARGV( 2 ), "self" ))
+		{
+			CBaseEntity *pKind = NULL;
+			int n = 0;
+			while(( pKind = UTIL_FindEntityByClassname( pKind, CMD_ARGV( 2 ))) != NULL )
+			{
+				if( pKind->pev->takedamage == DAMAGE_NO || !pKind->IsAlive())
+					continue;
+				pKind->TakeDamage( VARS( eoNullEntity ), VARS( eoNullEntity ), atof( CMD_ARGV( 1 )), DMG_GENERIC );
+				n++;
+			}
+			ALERT( at_console, "sc_hurt: %d %s hurt\n", n, CMD_ARGV( 2 ));
+			return true;
+		}
 		CBaseEntity *pTarget = CBaseEntity::Instance( pEntity );
-		if( CMD_ARGC() < 3 || strcmp( CMD_ARGV( 2 ), "self" ))
+		if( CMD_ARGC() < 3 )
 		{
 			UTIL_MakeVectors( pEntity->v.v_angle );
 			Vector eye = pEntity->v.origin + pEntity->v.view_ofs;

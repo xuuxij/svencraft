@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include "library.h"
 #include "voice.h"
 #include "pm_local.h"
+#include "scnet.h"
 
 #if XASH_LOW_MEMORY != 2
 int SV_UPDATE_BACKUP = SINGLEPLAYER_BACKUP;
@@ -1039,6 +1040,7 @@ qboolean SV_SpawnServer( const char *mapname, const char *startspot, qboolean ba
 	SetBits( sv.model_precache_flags[WORLD_INDEX], RES_FATALIFMISSING );
 	sv.worldmodel = sv.models[WORLD_INDEX] = Mod_LoadWorld( sv.model_precache[WORLD_INDEX], true );
 	Dyn_LoadForMap( sv.name, sv.worldmodel ); // diggable geometry kept out of the BSP (maps/<map>.dyn)
+	SCNet_NewMap(); // its carve journal starts over (common/scnet.c)
 	CRC32_MapFile( &sv.worldmapCRC, sv.model_precache[WORLD_INDEX], svs.maxclients > 1 );
 
 	if( FBitSet( host.features, ENGINE_QUAKE_COMPATIBLE ) && FS_FileExists( "progs.dat", false ))

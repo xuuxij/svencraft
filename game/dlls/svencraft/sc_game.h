@@ -76,6 +76,7 @@ struct SCInventory
 	int	furnace;		// the furnace being looked at (SCS_FURNACE)
 	int	heldSlot, heldId;	// what the active weapon was deployed for (sc_hotbar.cpp)
 	bool	startKit;		// the wooden tools were handed out (once per connection, not again after a death)
+	bool	saveChecked;		// a kept world's record for this player was looked for (sc_save.cpp)
 	// block being mined
 	int	mineCell[3];
 	float	mineProgress;
@@ -199,6 +200,16 @@ void SC_FurnaceFrame( void );
 void SC_CraftingReset( void );		// a new map: no furnaces yet
 const scslot_t *SC_FurnaceSlots( int furnace, int *cook, int *burn );	// in, fuel, out
 scslot_t *SC_FurnaceSlot( int furnace, int which );
+int SC_FurnaceSave( int i, int *cell, scslot_t *slots, int *burn, int *burnTotal, int *cook, bool *lit );
+int SC_FurnaceRestore( const int *cell, int burn, int burnTotal, int cook, bool lit );
+// keeping a world between sessions (sc_save.cpp)
+bool SC_LoadWorld( void );			// the map starts: its kept world instead of a new one, if any
+bool SC_SaveWorld( const char *why );
+void SC_SaveFrame( void );			// the autosave
+bool SC_SaveRestorePlayer( CBasePlayer *pPlayer );	// a player joining gets back what they had here
+void SC_SavePlayerLeft( CBasePlayer *pPlayer );
+void SC_RegisterSaveCommands( void );
+void SC_RegisterRiftCvars( void );		// the rift's creatures (sc_entities.cpp)
 
 // explosions (sc_blast.cpp): Minecraft's, by power (creeper 3, TNT 4); one in dropOneIn broken blocks drops
 void SC_Explosion( const Vector &center, float power, int dropOneIn );

@@ -12,6 +12,7 @@ point lights), each face's part of the cell packed into the cell's lightmap.
 #include "pm_local.h"
 #include "dynworld_api.h"
 #include "dynworld.h"
+#include "scnet.h"
 
 #define DYN_MAX_SIDES		40
 #define DYN_MAX_WINDING		64
@@ -918,6 +919,7 @@ float Dyn_CarveBox( const vec3_t mins, const vec3_t maxs, float *volume, int max
 	}
 	if( total > 0.0f )
 	{
+		SCNet_DynCarve( mins, maxs );	// the journal, and to the players on other machines (scnet.c)
 		float *log = dw.carvelog[dw.numcarves++ % DYN_CARVE_LOG];
 		VectorCopy( mins, log );
 		VectorCopy( maxs, log + 3 );

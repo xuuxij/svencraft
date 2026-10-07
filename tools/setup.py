@@ -241,6 +241,7 @@ GENERATORS = [  # (script, a file it makes): in this order (docs/BUILDING.md)
     ('tools/make_hand.py', 'models/svencraft/v_schand.mdl'),
     ('tools/make_tools.py', 'models/svencraft/v_scpickaxe1.mdl'),
     ('tools/make_creeper.py', 'models/svencraft/creeper.mdl'),
+    ('tools/make_mobs.py', 'models/svencraft/zombie.mdl'),
     ('tools/make_font.py', 'sprites/svencraft/font.spr'),
     ('tools/make_materials.py', 'sound/materials.txt'),
     ('tools/make_skillcfg.py', 'skill.cfg'),

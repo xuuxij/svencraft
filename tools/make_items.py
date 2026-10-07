@@ -39,6 +39,9 @@ ITEMS = [   # id, constant, name, art
     (72, 'CIRCUIT', 'Circuit Board', 'circuit'),
     (73, 'SHEARS', 'Shears', 'shears'),
     (74, 'APPLE', 'Apple', 'apple'),
+    (75, 'ROTTEN_FLESH', 'Rotten Flesh', 'rotten_flesh'),    # the block world's mobs drop these (sc_mobs.cpp)
+    (76, 'BONE', 'Bone', 'bone'),
+    (77, 'STRING', 'String', 'string'),
 ]
 TOOLS = [   # id, constant, name, tool, tier
     (96, 'WOOD_PICKAXE', 'Wooden Pickaxe', 'pickaxe', 1), (97, 'STONE_PICKAXE', 'Stone Pickaxe', 'pickaxe', 2),
@@ -205,6 +208,19 @@ NEW['shears'] = [E16, E16, "...........I....", "..........II....", ".........II.
 NEW['apple'] = [E16, E16, ".......D........", ".......D.GG.....", ".......DGG......", "....EEEDEEE.....",
                 "...EEwEEEEEE....", "..EEwEEEEEEEE...", "..EEEEEEEEEEE...", "..EEEEEEEEEEE...", "..EEEEEEEEEEE...",
                 "...EEEEEEEEE....", "...EEEEEEEEE....", "....EEE.EEE.....", E16, E16]
+art.MAT.update({
+    'F': ((178, 112, 92), (142, 80, 66), (100, 54, 46)),     # rotten flesh
+    'H': ((246, 244, 232), (220, 218, 204), (176, 174, 160)), # bone
+})
+NEW['rotten_flesh'] = [E16, E16, E16, ".....FFF........", "....FFFFF.......", "...FFqFFFFF.....", "...FFFFFnFFF....",
+                       "....FFFFFFFFF...", ".....FFqFFFFF...", "......FFFFnFF...", ".......FFFFF....", "........FFF.....",
+                       E16, E16, E16, E16]
+NEW['bone'] = [E16, E16, "...........HH...", "..........HHHH..", "...........HHH..", "..........HH....",
+               ".........HH.....", "........HH......", ".......HH.......", "......HH........", ".....HH.........",
+               "...HHH..........", "..HHHH..........", "...HH...........", E16, E16]
+NEW['string'] = [E16, E16, ".........s......", "........s.s.....", ".......s...s....", "......s.....s...",
+                 ".....s.......s..", "......s.....s...", ".......s...s....", "........s.s.....", ".........s......",
+                 "........s.......", ".......s........", "......s.........", E16, E16]
 # Opposing Force's weapons and ammo
 art.MAT.update({
     'J': ((150, 224, 255), (70, 160, 230), (36, 96, 170)),     # shock roach blue

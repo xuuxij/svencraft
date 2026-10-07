@@ -26,9 +26,10 @@ Half-Life-style town over a generated block world with caves and a rift). Workin
   dip, blast shake), room acoustics, `sc_state` JSON for tests and the planned AI dungeon master.
 - **Half-Life / Sven Co-op:** Opposing Force's weapons and monsters (merged from upstream), Sven's minigun, medkit
   (heal, revive players and allies), heavy weapons grunt and robot grunt; co-op rules (no friendly fire, the dead
-  wait for a medic, antiblock); wall chargers, ladders, water (swimming, drowning, splashes), speech for the suit
+  wait for a medic, antiblock) over the network (the block world and the dug-out town synced to every player);
+  saved worlds (blocks, digging, inventories, furnaces); wall chargers, ladders, water (swimming, drowning, splashes), speech for the suit
   and the NPCs, fog and steam, Xen flora around the rift.
-- **Planned:** more Minecraft mobs, saving, Sven-style co-op sections with per-section reset, detailed player
+- **Planned:** more Minecraft mobs, Sven-style co-op sections with per-section reset, detailed player
   stats, the AI dungeon master, a story/phase switch (Half-Life first, Minecraft later), day and night, renderer
   upgrades.
 

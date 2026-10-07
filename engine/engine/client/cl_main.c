@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include "vid_common.h"
 #include "pm_local.h"
 #include "multi_emulator.h"
+#include "scnet.h"
 
 #define CL_CONNECTION_TIMEOUT 15.0f
 #define CL_CONNECTION_RETRIES 5
@@ -3077,8 +3078,10 @@ static void CL_ReadNetMessage( void )
 
 		if( Netchan_CopyFileFragments( &cls.netchan, &net_message ))
 		{
+			// Svencraft: the server's world snapshot (client/cl_scnet.c); anything else:
 			// remove from resource request stuff.
-			CL_ProcessFile( true, cls.netchan.incomingfilename );
+			if( !SCNet_ClientFile( cls.netchan.incomingfilename, cls.netchan.tempbuffer, cls.netchan.tempbuffersize ))
+				CL_ProcessFile( true, cls.netchan.incomingfilename );
 		}
 	}
 

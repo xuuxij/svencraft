@@ -51,6 +51,7 @@ static const screcipedef_t g_SCRecipeDefs[] =
 	{ "III/PP.",		"I=67 P=15",			SCITEM_SHOTGUN,		1 },
 	{ "III/PIC",		"I=67 P=15 C=72",		SCITEM_MP5,		1 },
 	{ "SIS/RSR/.S.",	"S=64 I=67 R=23",		SCITEM_CROSSBOW,		1 },
+	{ "SIS/TST/.S.",	"S=64 I=67 T=77",		SCITEM_CROSSBOW,		1 },	// strung with a spider's string
 	{ ".I./IGI/.I.",	"I=67 G=71",			SCITEM_GRENADE,		1 },
 	{ "III/GCG/P..",	"I=67 G=71 C=72 P=15",		SCITEM_RPG,		1 },
 	{ "I/G",		"I=67 G=71",			SCITEM_AMMO_9MM,		1 },
@@ -58,6 +59,7 @@ static const screcipedef_t g_SCRecipeDefs[] =
 	{ "R/G",		"R=23 G=71",			SCITEM_AMMO_SHELLS,	1 },
 	{ "I/G/I",		"I=67 G=71",			SCITEM_AMMO_MP5,		1 },
 	{ "I/S/R",		"I=67 S=64 R=23",		SCITEM_AMMO_BOLTS,	1 },
+	{ "B/S",		"B=76 S=64",			SCITEM_AMMO_BOLTS,	1 },	// bone-tipped
 	{ "I/G/G",		"I=67 G=71",			SCITEM_AMMO_ROCKET,	1 },
 	{ ".L./LRL/.L.",	"L=14 R=23",			SCITEM_MEDKIT,		1 },
 	{ "A/C/I",		"A=68 C=72 I=67",		SCITEM_BATTERY,		1 },

@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include "const.h"
 #include "server.h"
 #include "net_encode.h"
+#include "scnet.h"
 
 // challenges are valid for two consecutive windows of this size (max lifetime ~10s).
 #define CHALLENGE_WINDOW_SECONDS 5
@@ -2171,6 +2172,21 @@ static qboolean SV_Begin_f( sv_client_t *cl )
 	cl->connecttime = host.realtime;
 	SetBits( cl->flags, FCL_HOLD_FIRST_DATAGRAM );
 
+	SCNet_ClientBegin( cl );	// Svencraft: the block world and the dug-out town, for a player on another machine
+
+	return true;
+}
+
+/*
+==================
+SV_SCWorldAck_f
+
+Svencraft: the client has the world snapshot (common/scnet.c)
+==================
+*/
+static qboolean SV_SCWorldAck_f( sv_client_t *cl )
+{
+	SCNet_ClientAck( cl );
 	return true;
 }
 
@@ -3063,6 +3079,7 @@ static const ucmd_t ucmds[] =
 { "noclip", SV_Noclip_f },
 { "notarget", SV_Notarget_f },
 { "pause", SV_Pause_f },
+{ "scworld_ack", SV_SCWorldAck_f },
 { "sendres", SV_SendRes_f },
 { "setinfo", SV_SetInfo_f },
 { "spawn", SV_Spawn_f },

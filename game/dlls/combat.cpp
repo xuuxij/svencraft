@@ -1345,7 +1345,8 @@ void CBaseMonster::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector v
 			break;
 		}
 
-		SpawnBlood( ptr->vecEndPos, BloodColor(), flDamage );// a little surface blood.
+		if( !( bitsDamageType & DMG_BURN ))	// Svencraft: a burn doesn't bleed (a flame hits every frame)
+			SpawnBlood( ptr->vecEndPos, BloodColor(), flDamage );// a little surface blood.
 		TraceBleed( flDamage, vecDir, ptr, bitsDamageType );
 		AddMultiDamage( pevAttacker, this, flDamage, bitsDamageType );
 	}

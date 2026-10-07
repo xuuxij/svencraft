@@ -93,6 +93,7 @@ void SC_InvReset( CBasePlayer *pPlayer )
 	inv.furnace = -1;
 	inv.heldSlot = inv.heldId = -1;
 	inv.startKit = false;
+	inv.saveChecked = false;
 	inv.mineProgress = 0;
 	inv.lastHit = 0;
 	inv.nextCycle = 0;
@@ -232,6 +233,9 @@ void SC_Precache( void )
 	PRECACHE_MODEL( "models/svencraft/itemflat.mdl" );
 	PRECACHE_MODEL( "sprites/svencraft/cracks.spr" );
 	UTIL_PrecacheOther( "monster_creeper" );
+	UTIL_PrecacheOther( "monster_sc_zombie" );	// the block world's others (sc_mobs.cpp)
+	UTIL_PrecacheOther( "monster_sc_skeleton" );
+	UTIL_PrecacheOther( "monster_sc_spider" );
 
 	// the monsters that can be brought in at any time (sc_summon now, the dungeon master later) load with the map,
 	// so they never come in half-loaded (late precache: no sounds for clients that joined before)
@@ -245,8 +249,10 @@ void SC_Precache( void )
 		"monster_shocktrooper", "monster_pitdrone", "monster_gonome", "monster_alien_voltigore",
 		"monster_alien_babyvoltigore", "monster_otis", "monster_zombie_barney", "monster_zombie_soldier",
 		"monster_shockroach", "monster_cleansuit_scientist",
-		// Sven Co-op's own (sc_hwgrunt.cpp, sc_robogrunt.cpp)
-		"monster_hwgrunt", "monster_robogrunt",
+		"monster_sentry", "monster_miniturret", "monster_turret",	// Half-Life's turrets
+		// Sven Co-op's own (sc_hwgrunt.cpp, sc_robogrunt.cpp, gargantua.cpp, sc_tor.cpp, sc_kingpin.cpp, sc_stukabat.cpp)
+		"monster_hwgrunt", "monster_robogrunt", "monster_babygarg", "monster_alien_tor", "monster_kingpin",
+		"monster_stukabat",
 	};
 	for( int i = 0; i < (int)ARRAYSIZE( bestiary ); i++ )
 		UTIL_PrecacheOther( bestiary[i] );

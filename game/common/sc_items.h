@@ -26,6 +26,9 @@ enum
 	SCITEM_CIRCUIT = 72,
 	SCITEM_SHEARS = 73,
 	SCITEM_APPLE = 74,
+	SCITEM_ROTTEN_FLESH = 75,
+	SCITEM_BONE = 76,
+	SCITEM_STRING = 77,
 	SCITEM_WOOD_PICKAXE = 96,
 	SCITEM_STONE_PICKAXE = 97,
 	SCITEM_IRON_PICKAXE = 98,
@@ -75,22 +78,22 @@ enum
 	SCITEM_FIRSTAID = 148,
 };
 
-#define SCI_FLAT_TORCH_SKIN	11	// itemflat.mdl: skins are the items in order, then the torch
+#define SCI_FLAT_TORCH_SKIN	14	// itemflat.mdl: skins are the items in order, then the torch
 #define SCI_NUM_BLOCK_IDS	38	// v_schand.mdl: skins 0..this-1 are blocks, then the flat skins
 
 // itemflat.mdl skin for each id drawn flat (items, torches, tools, weapons), -1 for cubes and the rest
 static const signed char g_SCFlatSkin[SCI_COUNT] =
 {
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, 11, 11, 11, 11, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 14, 14, 14, 14, 14, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -1, -1, -1, -1,
+	0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, -1, -1,
 	-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-	12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, -1, -1, -1, -1,
-	24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, -1, -1,
-	-1, -1, -1, -1, -1, -1, -1, -1, 38, 39, 40, 41, 42, 43, 44, 45,
-	-1, -1, -1, 46, 47,
+	15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, -1, -1, -1, -1,
+	27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, -1, -1,
+	-1, -1, -1, -1, -1, -1, -1, -1, 41, 42, 43, 44, 45, 46, 47, 48,
+	-1, -1, -1, 49, 50,
 };
 
 typedef struct
@@ -180,9 +183,9 @@ static const scitem_t g_SCItems[SCI_COUNT] =
 	/*  72 */ { "Circuit Board", 64, SCI_ITEM, NULL, 0, 0 },
 	/*  73 */ { "Shears", 1, SCI_ITEM, NULL, 0, 0 },
 	/*  74 */ { "Apple", 64, SCI_ITEM, NULL, 0, 0 },
-	/*  75 */ { NULL, 0, SCI_NONE, NULL, 0, 0 },
-	/*  76 */ { NULL, 0, SCI_NONE, NULL, 0, 0 },
-	/*  77 */ { NULL, 0, SCI_NONE, NULL, 0, 0 },
+	/*  75 */ { "Rotten Flesh", 64, SCI_ITEM, NULL, 0, 0 },
+	/*  76 */ { "Bone", 64, SCI_ITEM, NULL, 0, 0 },
+	/*  77 */ { "String", 64, SCI_ITEM, NULL, 0, 0 },
 	/*  78 */ { NULL, 0, SCI_NONE, NULL, 0, 0 },
 	/*  79 */ { NULL, 0, SCI_NONE, NULL, 0, 0 },
 	/*  80 */ { NULL, 0, SCI_NONE, NULL, 0, 0 },

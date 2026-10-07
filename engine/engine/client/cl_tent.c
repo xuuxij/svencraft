@@ -444,7 +444,23 @@ TEMPENTITY *CL_TempEntAlloc( const vec3_t org, model_t *pmodel )
 	{
 		if( cl_lasttimewarn < host.realtime )
 		{
-			Con_DPrintf( "Overflow %d temporary ents!\n", GI->max_tents );
+			// Svencraft: which model fills the list (what to look at when it happens)
+			model_t	*mods[8] = { 0 };
+			int	counts[8] = { 0 }, i, top = 0;
+
+			for( pTemp = cl_active_tents; pTemp; pTemp = pTemp->next )
+			{
+				for( i = 0; i < 8 && mods[i] && mods[i] != pTemp->entity.model; i++ );
+				if( i < 8 )
+				{
+					mods[i] = pTemp->entity.model;
+					counts[i]++;
+				}
+			}
+			for( i = 1; i < 8; i++ )
+				if( counts[i] > counts[top] )
+					top = i;
+			Con_DPrintf( "Overflow %d temporary ents! (%d of %s)\n", GI->max_tents, counts[top], mods[top] ? mods[top]->name : "nothing" );
 			cl_lasttimewarn = host.realtime + 1.0f;
 		}
 		return NULL;

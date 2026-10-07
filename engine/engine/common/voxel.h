@@ -20,6 +20,10 @@ typedef struct vox_trace_s
 const vox_world_t *Vox_World( void );
 qboolean Vox_Active( void );
 void Vox_Clear( void );
+qboolean Vox_LoadWorld( const int *mins, const int *maxs, const unsigned char *flags, const unsigned short *blocks );
+void Vox_NetSet( int x, int y, int z, int id );
+void Vox_NetFill( int x0, int y0, int z0, int x1, int y1, int z1, int id );
+void Vox_NetFlags( int id, int flags );
 qboolean Vox_TraceBox( const vec3_t start, const vec3_t mins, const vec3_t maxs, const vec3_t end, vox_trace_t *tr );
 qboolean Vox_BoxSolid( const vec3_t absmin, const vec3_t absmax );
 qboolean Vox_PointSolid( const vec3_t p );

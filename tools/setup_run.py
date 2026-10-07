@@ -66,6 +66,7 @@ for rel in ('dlls/hl_amd64.dll', 'cl_dlls/client_amd64.dll'):
 for rel, tool in (('scripts/blocks.txt', 'make_blocktex.py'), ('models/svencraft/blockitem.mdl', 'make_blockassets.py'),
                   ('sprites/svencraft/items.spr', 'make_items.py'), ('models/svencraft/v_schand.mdl', 'make_hand.py'),
                   ('models/svencraft/v_scpickaxe1.mdl', 'make_tools.py'), ('models/svencraft/creeper.mdl', 'make_creeper.py'),
+                  ('models/svencraft/zombie.mdl', 'make_mobs.py'),
                   ('sprites/svencraft/font.spr', 'make_font.py'), ('sound/materials.txt', 'make_materials.py'),
                   ('skill.cfg', 'make_skillcfg.py'), ('maps/svencraft_sandbox.bsp', 'maps_src/make_town.py')):
     if not os.path.isfile(os.path.join(GAME, *rel.split('/'))):

@@ -46,6 +46,12 @@ typedef struct vox_api_s
 	int	(*TraceLine)( const float *start, const float *end, float *fraction, int *cell, float *normal );
 	// true when any solid block overlaps the world-space box
 	int	(*BoxSolid)( const float *absmin, const float *absmax );
+	// saving (the paths are in the game folder): the block world and every carve in the diggable geometry, as the
+	// snapshot a joining player gets (engine common/scnet.c); loading one puts it in place of the generated world
+	int	(*SaveWorld)( const char *path );
+	int	(*LoadWorld)( const char *path );
+	int	(*WriteFile)( const char *path, const void *data, int size );	// makes the folders
+	int	(*RenameFile)( const char *oldpath, const char *newpath );	// newpath NULL: deletes
 } vox_api_t;
 
 typedef vox_api_t *(*pfnVox_GetAPI)( int version );

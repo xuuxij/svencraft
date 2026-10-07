@@ -677,6 +677,41 @@ void SC_FurnaceRemoved( const int *cell, const Vector &where )
 	}
 }
 
+// saving (sc_save.cpp): furnace i as it is (-1: past the last; 0: not in use; 1: in use)
+int SC_FurnaceSave( int i, int *cell, scslot_t *slots, int *burn, int *burnTotal, int *cook, bool *lit )
+{
+	if( i < 0 || i >= SC_MAX_FURNACES )
+		return -1;
+	const scfurnace_t &f = g_SCFurnaces[i];
+	if( !f.used )
+		return 0;
+	for( int k = 0; k < 3; k++ )
+	{
+		cell[k] = f.cell[k];
+		slots[k] = f.slot[k];
+	}
+	*burn = f.burn;
+	*burnTotal = f.burnTotal;
+	*cook = f.cook;
+	*lit = f.lit;
+	return 1;
+}
+
+// loading a kept world: a furnace back where it stood, burning as it was
+int SC_FurnaceRestore( const int *cell, int burn, int burnTotal, int cook, bool lit )
+{
+	int i = SC_FurnaceAt( cell, true );
+	if( i < 0 )
+		return -1;
+	scfurnace_t &f = g_SCFurnaces[i];
+	f.burn = burn;
+	f.burnTotal = burnTotal;
+	f.cook = cook;
+	f.lit = lit;
+	f.changed = true;
+	return i;
+}
+
 scslot_t *SC_FurnaceSlot( int furnace, int which )
 {
 	if( furnace < 0 || furnace >= SC_MAX_FURNACES || !g_SCFurnaces[furnace].used || which < 0 || which > 2 )

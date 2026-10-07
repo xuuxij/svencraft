@@ -138,6 +138,59 @@ cvar_t	sk_gargantua_dmg_stomp1	= {"sk_gargantua_dmg_stomp1","0"};
 cvar_t	sk_gargantua_dmg_stomp2	= {"sk_gargantua_dmg_stomp2","0"};
 cvar_t	sk_gargantua_dmg_stomp3	= {"sk_gargantua_dmg_stomp3","0"};
 
+// Svencraft: Sven Co-op's baby gargantua (gargantua.cpp)
+cvar_t	sk_babygargantua_health1 = {"sk_babygargantua_health1","0"};
+cvar_t	sk_babygargantua_health2 = {"sk_babygargantua_health2","0"};
+cvar_t	sk_babygargantua_health3 = {"sk_babygargantua_health3","0"};
+cvar_t	sk_babygargantua_dmg_slash1 = {"sk_babygargantua_dmg_slash1","0"};
+cvar_t	sk_babygargantua_dmg_slash2 = {"sk_babygargantua_dmg_slash2","0"};
+cvar_t	sk_babygargantua_dmg_slash3 = {"sk_babygargantua_dmg_slash3","0"};
+cvar_t	sk_babygargantua_dmg_fire1 = {"sk_babygargantua_dmg_fire1","0"};
+cvar_t	sk_babygargantua_dmg_fire2 = {"sk_babygargantua_dmg_fire2","0"};
+cvar_t	sk_babygargantua_dmg_fire3 = {"sk_babygargantua_dmg_fire3","0"};
+cvar_t	sk_babygargantua_dmg_stomp1 = {"sk_babygargantua_dmg_stomp1","0"};
+cvar_t	sk_babygargantua_dmg_stomp2 = {"sk_babygargantua_dmg_stomp2","0"};
+cvar_t	sk_babygargantua_dmg_stomp3 = {"sk_babygargantua_dmg_stomp3","0"};
+
+// Svencraft: Sven Co-op's Tor, Kingpin and Stukabat (svencraft/sc_tor.cpp, sc_kingpin.cpp, sc_stukabat.cpp;
+// sk_stukabat is the stukabat's health, Sven's name)
+cvar_t	sk_tor_health1 = {"sk_tor_health1","0"};
+cvar_t	sk_tor_health2 = {"sk_tor_health2","0"};
+cvar_t	sk_tor_health3 = {"sk_tor_health3","0"};
+cvar_t	sk_tor_punch1 = {"sk_tor_punch1","0"};
+cvar_t	sk_tor_punch2 = {"sk_tor_punch2","0"};
+cvar_t	sk_tor_punch3 = {"sk_tor_punch3","0"};
+cvar_t	sk_tor_energybeam1 = {"sk_tor_energybeam1","0"};
+cvar_t	sk_tor_energybeam2 = {"sk_tor_energybeam2","0"};
+cvar_t	sk_tor_energybeam3 = {"sk_tor_energybeam3","0"};
+cvar_t	sk_tor_sonicblast1 = {"sk_tor_sonicblast1","0"};
+cvar_t	sk_tor_sonicblast2 = {"sk_tor_sonicblast2","0"};
+cvar_t	sk_tor_sonicblast3 = {"sk_tor_sonicblast3","0"};
+cvar_t	sk_kingpin_health1 = {"sk_kingpin_health1","0"};
+cvar_t	sk_kingpin_health2 = {"sk_kingpin_health2","0"};
+cvar_t	sk_kingpin_health3 = {"sk_kingpin_health3","0"};
+cvar_t	sk_kingpin_lightning1 = {"sk_kingpin_lightning1","0"};
+cvar_t	sk_kingpin_lightning2 = {"sk_kingpin_lightning2","0"};
+cvar_t	sk_kingpin_lightning3 = {"sk_kingpin_lightning3","0"};
+cvar_t	sk_kingpin_tele_blast1 = {"sk_kingpin_tele_blast1","0"};
+cvar_t	sk_kingpin_tele_blast2 = {"sk_kingpin_tele_blast2","0"};
+cvar_t	sk_kingpin_tele_blast3 = {"sk_kingpin_tele_blast3","0"};
+cvar_t	sk_kingpin_plasma_blast1 = {"sk_kingpin_plasma_blast1","0"};
+cvar_t	sk_kingpin_plasma_blast2 = {"sk_kingpin_plasma_blast2","0"};
+cvar_t	sk_kingpin_plasma_blast3 = {"sk_kingpin_plasma_blast3","0"};
+cvar_t	sk_kingpin_melee1 = {"sk_kingpin_melee1","0"};
+cvar_t	sk_kingpin_melee2 = {"sk_kingpin_melee2","0"};
+cvar_t	sk_kingpin_melee3 = {"sk_kingpin_melee3","0"};
+cvar_t	sk_kingpin_telefrag1 = {"sk_kingpin_telefrag1","0"};
+cvar_t	sk_kingpin_telefrag2 = {"sk_kingpin_telefrag2","0"};
+cvar_t	sk_kingpin_telefrag3 = {"sk_kingpin_telefrag3","0"};
+cvar_t	sk_stukabat1 = {"sk_stukabat1","0"};
+cvar_t	sk_stukabat2 = {"sk_stukabat2","0"};
+cvar_t	sk_stukabat3 = {"sk_stukabat3","0"};
+cvar_t	sk_stukabat_dmg_bite1 = {"sk_stukabat_dmg_bite1","0"};
+cvar_t	sk_stukabat_dmg_bite2 = {"sk_stukabat_dmg_bite2","0"};
+cvar_t	sk_stukabat_dmg_bite3 = {"sk_stukabat_dmg_bite3","0"};
+
 
 // Hassassin
 cvar_t	sk_hassassin_health1 = {"sk_hassassin_health1","0"};
@@ -849,6 +902,56 @@ void GameDLLInit( void )
 	CVAR_REGISTER( &sk_gargantua_dmg_stomp1 );// {"sk_gargantua_dmg_stomp1","0"};
 	CVAR_REGISTER( &sk_gargantua_dmg_stomp2 );// {"sk_gargantua_dmg_stomp2","0"};
 	CVAR_REGISTER( &sk_gargantua_dmg_stomp3	);// {"sk_gargantua_dmg_stomp3","0"};
+
+	CVAR_REGISTER( &sk_babygargantua_health1 );	// Svencraft: Sven's baby gargantua
+	CVAR_REGISTER( &sk_babygargantua_health2 );
+	CVAR_REGISTER( &sk_babygargantua_health3 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_slash1 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_slash2 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_slash3 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_fire1 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_fire2 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_fire3 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_stomp1 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_stomp2 );
+	CVAR_REGISTER( &sk_babygargantua_dmg_stomp3 );
+
+	CVAR_REGISTER( &sk_tor_health1 );	// Svencraft: Sven's Tor, Kingpin and Stukabat
+	CVAR_REGISTER( &sk_tor_health2 );
+	CVAR_REGISTER( &sk_tor_health3 );
+	CVAR_REGISTER( &sk_tor_punch1 );
+	CVAR_REGISTER( &sk_tor_punch2 );
+	CVAR_REGISTER( &sk_tor_punch3 );
+	CVAR_REGISTER( &sk_tor_energybeam1 );
+	CVAR_REGISTER( &sk_tor_energybeam2 );
+	CVAR_REGISTER( &sk_tor_energybeam3 );
+	CVAR_REGISTER( &sk_tor_sonicblast1 );
+	CVAR_REGISTER( &sk_tor_sonicblast2 );
+	CVAR_REGISTER( &sk_tor_sonicblast3 );
+	CVAR_REGISTER( &sk_kingpin_health1 );
+	CVAR_REGISTER( &sk_kingpin_health2 );
+	CVAR_REGISTER( &sk_kingpin_health3 );
+	CVAR_REGISTER( &sk_kingpin_lightning1 );
+	CVAR_REGISTER( &sk_kingpin_lightning2 );
+	CVAR_REGISTER( &sk_kingpin_lightning3 );
+	CVAR_REGISTER( &sk_kingpin_tele_blast1 );
+	CVAR_REGISTER( &sk_kingpin_tele_blast2 );
+	CVAR_REGISTER( &sk_kingpin_tele_blast3 );
+	CVAR_REGISTER( &sk_kingpin_plasma_blast1 );
+	CVAR_REGISTER( &sk_kingpin_plasma_blast2 );
+	CVAR_REGISTER( &sk_kingpin_plasma_blast3 );
+	CVAR_REGISTER( &sk_kingpin_melee1 );
+	CVAR_REGISTER( &sk_kingpin_melee2 );
+	CVAR_REGISTER( &sk_kingpin_melee3 );
+	CVAR_REGISTER( &sk_kingpin_telefrag1 );
+	CVAR_REGISTER( &sk_kingpin_telefrag2 );
+	CVAR_REGISTER( &sk_kingpin_telefrag3 );
+	CVAR_REGISTER( &sk_stukabat1 );
+	CVAR_REGISTER( &sk_stukabat2 );
+	CVAR_REGISTER( &sk_stukabat3 );
+	CVAR_REGISTER( &sk_stukabat_dmg_bite1 );
+	CVAR_REGISTER( &sk_stukabat_dmg_bite2 );
+	CVAR_REGISTER( &sk_stukabat_dmg_bite3 );
 
 	// Hassassin
 	CVAR_REGISTER( &sk_hassassin_health1 );// {"sk_hassassin_health1","0"};

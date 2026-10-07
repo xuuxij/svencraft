@@ -19,7 +19,7 @@ CFG
 rm -rf svencraft/scrshots
 # the engine saves archived settings (s_show, fps_max ...) on quit: the player's own config.cfg comes back after
 cp svencraft/config.cfg svencraft/config.cfg.pretest 2>/dev/null
-timeout $TMO ./xash3d.exe -game svencraft -windowed -width 1280 -height 720 -dev 2 -log ${ARGS} +sc_seed ${SEED:-1717} +map ${MAP:-svencraft_sandbox} +exec tests/$NAME.cfg > /dev/null 2>&1
+timeout $TMO ./xash3d.exe -game svencraft -windowed -width 1280 -height 720 -dev 2 -log ${ARGS} +sc_worldsave ${WORLDSAVE:-0} +sc_seed ${SEED:-1717} +map ${MAP:-svencraft_sandbox} +exec tests/$NAME.cfg > /dev/null 2>&1
 echo "exit $?"
 [ -f svencraft/config.cfg.pretest ] && mv -f svencraft/config.cfg.pretest svencraft/config.cfg
 python - "$ROOT" "$NAME" <<'PY'

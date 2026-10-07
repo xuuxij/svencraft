@@ -39,7 +39,8 @@ git -C game diff -- dlls/player.cpp   # one file
 
 New files (ours): `engine/common/voxel.c`, `voxel.h` (the block world), `engine/common/dynworld.c`, `dynworld.h`
 (the diggable map geometry), `common/voxel_api.h`, `common/dynworld_api.h` (their interfaces for the game DLLs and
-the renderer), `ref/gl/gl_voxel.c`, `ref/gl/gl_dynworld.c` (drawing and lighting them).
+the renderer), `ref/gl/gl_voxel.c`, `ref/gl/gl_dynworld.c` (drawing and lighting them), `engine/common/scnet.c`,
+`scnet.h`, `engine/client/cl_scnet.c` (both worlds over the network: snapshots and live changes).
 
 Changed upstream files (15, about 210 added lines): `engine/common/pm_trace.c` and `engine/server/sv_world.c`
 (traces collide with blocks and the diggable geometry; material names for blocks), `engine/server/sv_init.c`
@@ -47,7 +48,9 @@ Changed upstream files (15, about 210 added lines): `engine/common/pm_trace.c` a
 `engine/client/soundlib/snd_wav.c` (Ogg/MP3 data in `.wav` files, as Sven Co-op ships them),
 `engine/ref_api.h`, `engine/client/dll_int/ref_common.c`, `ref/common/ref_common.h`, `ref/common/ref_light.c`,
 `ref/gl/gl_context.c`, `gl_local.h`, `gl_rmain.c`, `gl_decals.c` (the renderer hooks: drawing the two worlds,
-lighting models from them, decals on the diggable geometry).
+lighting models from them, decals on the diggable geometry). For the network: `common/protocol.h` (`svc_scworld` = 27,
+a reserved number), `server/sv_client.c` (`begin` sends the snapshot, `scworld_ack`), `server/sv_main.c`,
+`client/cl_main.c` (the snapshot file), `client/parse/cl_parse.c` (`svc_scworld`; a remote client loads the `.dyn`).
 
 ### Game (hlsdk-portable)
 

@@ -23,7 +23,7 @@ static const struct { const char *cls, *name; } g_SCNames[] =
 	{ "monster_human_grunt", "Human Grunt" }, { "monster_hwgrunt", "Heavy Weapons Grunt" },
 	{ "monster_robogrunt", "Robot Grunt" }, { "monster_human_assassin", "Female Assassin" },
 	{ "monster_barney", "Barney" }, { "monster_scientist", "Scientist" }, { "monster_barnacle", "Barnacle" },
-	{ "monster_gargantua", "Gargantua" }, { "monster_bigmomma", "Big Momma" }, { "monster_ichthyosaur", "Ichthyosaur" },
+	{ "monster_gargantua", "Gargantua" }, { "monster_babygarg", "Baby Gargantua" }, { "monster_bigmomma", "Big Momma" }, { "monster_ichthyosaur", "Ichthyosaur" },
 	{ "monster_snark", "Snark" }, { "monster_tentacle", "Tentacle" }, { "monster_apache", "Apache" },
 	{ "monster_osprey", "Osprey" }, { "monster_turret", "Turret" }, { "monster_miniturret", "Mini-Turret" },
 	{ "monster_sentry", "Sentry Turret" }, { "monster_gman", "G-Man" }, { "monster_leech", "Leech" },
@@ -35,7 +35,9 @@ static const struct { const char *cls, *name; } g_SCNames[] =
 	{ "monster_shockroach", "Shock Roach" }, { "monster_cleansuit_scientist", "Cleansuit Scientist" },
 	{ "monster_blkop_apache", "Black Ops Apache" }, { "monster_blkop_osprey", "Black Ops Osprey" },
 	{ "monster_drillsergeant", "Drill Sergeant" }, { "monster_recruit", "Recruit" },
-	{ "monster_creeper", "Creeper" },
+	{ "monster_alien_tor", "Tor" }, { "monster_kingpin", "Kingpin" }, { "monster_stukabat", "Stukabat" },
+	{ "monster_creeper", "Creeper" }, { "monster_sc_zombie", "Zombie" }, { "monster_sc_skeleton", "Skeleton" },
+	{ "monster_sc_spider", "Spider" },
 };
 
 void SC_DisplayName( CBaseEntity *e, char *out, int size )

@@ -46,7 +46,7 @@ GNU General Public License for more details.
 #define svc_setpause		24	// [byte] 0 = unpaused, 1 = paused
 #define svc_signonnum		25	// [byte] used for the signon sequence
 #define svc_centerprint		26	// [string] to put in center of the screen
-// reserved
+#define svc_scworld			27	// Svencraft: a change to the block world or the diggable geometry (common/scnet.c)
 // reserved
 // reserved
 #define svc_intermission		30	// empty message (event)

@@ -4,6 +4,18 @@ Everything is tried in the sandbox map (`svencraft_sandbox`) before it is used a
 diagnostic commands below are real features, not test-only hacks: they are what the planned AI dungeon master
 will act through (DESIGN.md), so keep them working and server-side.
 
+## Co-op over the network: tools/nettest.sh
+
+```sh
+sh tools/nettest.sh <name> "<host cmds>" "<client cmds>" [timeout]
+```
+
+The host runs a co-op listen server (`maxplayers 2`, `coop 1`); 12 s later (`JOIN=<seconds>`) a second copy of the
+engine connects to it at 127.0.0.1 like a friend's PC, with its own memory. Each runs its commands and quits;
+`screenshot scrshots/h_01.png` (host) and `scrshots/c_01.png` (client) are tiled side by side into
+`tools/shots/<name>.png`, the logs are `run/nettest_host.log` / `nettest_client.log`. Commands in the client's
+list reach the server once it is connected: start it with a `w1k` before `god` and the like.
+
 ## In-engine visual tests: tools/runtest.sh
 
 ```sh
@@ -19,7 +31,8 @@ sh tools/runtest.sh creeper1 "fps_max 100;sc_cave 2;w100;sc_summon monster_creep
   `notarget` (set `NT=" "` to leave monsters aware of you), your commands (a `w10` is added after every
   `screenshot`), then `quit`. With `fps_max 100`, `w100` is about one second.
 - Runs `run/xash3d.exe -game svencraft -windowed -width 1280 -height 720 -dev 2 -log $ARGS +sc_seed $SEED +map $MAP`
-  (`SEED` default 1717, `MAP` default `svencraft_sandbox`; `ARGS` more launch arguments: a co-op test with a
+  (`SEED` default 1717, `MAP` default `svencraft_sandbox`; `+sc_worldsave 0` unless `WORLDSAVE=1`, so a test
+  neither loads nor leaves a saved world; `ARGS` more launch arguments: a co-op test with a
   second player is `ARGS="+maxplayers 2 +coop 1"` and `sc_bot`).
 - Tiles the screenshots (2 per row, half size) into `tools/shots/<name>.png` and prints errors and warnings from
   `run/engine.log`.
@@ -49,7 +62,9 @@ Cheat commands need `sv_cheats 1` (runtest and `Play Svencraft.bat` set it). Blo
 | `sc_give <id> [count]` | server, cheat | add an item or block to the inventory (default 64; ids: `game/common/sc_items.h`) |
 | `sc_summon <classname> [distance]` | server, cheat | spawn a monster or entity on the ground ahead (default 160 units) |
 | `sc_clearmonsters` | server, cheat | remove every monster |
-| `sc_hurt <amount> [self]` | server, cheat | hurt what you look at (or yourself) and print its health |
+| `sc_hurt <amount> [self \| <classname>]` | server, cheat | hurt what you look at (or yourself) and print its health; with a classname, every living one of that kind (flyers, things out of sight) |
+| `sc_save` | server | save the world now (`run/svencraft/worlds/<map>/`) |
+| `sc_newworld` | server | put the kept world aside (`.old`) and start the map with a new one |
 | `sc_bot [name]` | server, cheat | a stand-in player ahead that just stands there (needs a free slot: `+maxplayers 2`) |
 | `sc_setblock <x> <y> <z> <id>` | server, cheat | place (id) or break (0) a block, as a player would |
 | `sc_carve <x> <y> <z> [x1 y1 z1]` | server, cheat | dig block cells out of the town geometry and the block world |

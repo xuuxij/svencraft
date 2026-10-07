@@ -39,14 +39,15 @@ bool SC_HoldingItem( CBasePlayer *pPlayer, int id )
 	return inv.slot[inv.hotbar].count > 0 && inv.slot[inv.hotbar].id == id;
 }
 
-// right-click with food: eat one (there is no hunger here: an apple mends 20, Minecraft's 4 hunger x5)
+// right-click with food: eat one (there is no hunger here: an apple mends 20, Minecraft's 4 hunger x5; rotten
+// flesh, a zombie's, 10)
 bool SC_EatHeld( CBasePlayer *pPlayer )
 {
 	SCInventory &inv = SC_Inv( pPlayer );
 	scslot_t &s = inv.slot[inv.hotbar];
-	if( s.count <= 0 || s.id != SCITEM_APPLE || pPlayer->pev->health >= pPlayer->pev->max_health )
+	if( s.count <= 0 || ( s.id != SCITEM_APPLE && s.id != SCITEM_ROTTEN_FLESH ) || pPlayer->pev->health >= pPlayer->pev->max_health )
 		return false;
-	pPlayer->TakeHealth( 20.0f, DMG_GENERIC );
+	pPlayer->TakeHealth( s.id == SCITEM_APPLE ? 20.0f : 10.0f, DMG_GENERIC );
 	EMIT_SOUND_DYN( ENT( pPlayer->pev ), CHAN_ITEM, "barnacle/bcl_chew1.wav", 0.8f, ATTN_NORM, 0, 120 + RANDOM_LONG( 0, 15 ));
 	if( --s.count <= 0 )
 		s.id = s.count = s.dmg = 0;
@@ -254,6 +255,7 @@ void SC_WearHeld( CBasePlayer *pPlayer, int uses )
 void SC_PlayerSpawn( CBasePlayer *pPlayer )
 {
 	pPlayer->pev->weapons |= ( 1 << WEAPON_SUIT );
+	SC_SaveRestorePlayer( pPlayer );	// joining a kept world: what they had here (sc_save.cpp)
 	for( int t = 0; t < TOOL_COUNT; t++ )
 		if( !SC_FindWeapon( pPlayer, g_SCToolWeapons[t] ))
 			SC_GiveWeapon( pPlayer, g_SCToolWeapons[t], false );

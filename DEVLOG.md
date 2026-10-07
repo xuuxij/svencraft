@@ -6,6 +6,45 @@ dates and the build history.
 
 ## 2026-10-07
 
+### Minecraft mobs (in progress)
+- Zombie, skeleton and spider (`monster_sc_zombie`, `monster_sc_skeleton`, `monster_sc_spider`, `sc_mobs.cpp`),
+  models built from code with original pixel art (`tools/make_mobs.py`, also the arrow). The zombie swipes, the
+  skeleton strafes and shoots arcing arrows that stick where they land, the spider leaps and climbs walls. They
+  share one base with the creeper (`sc_mob.cpp`: senses, walking, the red flash and knockback, the tip-over death).
+- Drops: rotten flesh (eaten: mends 10), bones (bolts: bone and stick), string (a crossbow), a box of crossbow
+  bolts now and then from a skeleton.
+- The rift brings them through: one every `sc_rift_interval` seconds (25) while fewer than `sc_rift_mobs` (4) are
+  about. Tested: each one fights, dies and drops; the creeper works as before. Still to do: a longer play test,
+  tuning, the docs.
+
+### More Sven monsters
+- The baby gargantua (`monster_babygarg`): Half-Life's gargantua made adjustable (voice pitch, flame length and
+  width, damage) and a small one built on it, with Sven's numbers; it bleeds, kicks (its model's own event) and
+  leaves a body. Tor (`sc_tor.cpp`): staff beam bursts, a portal that brings in alien grunts, a ground slam.
+  Kingpin (`sc_kingpin.cpp`): four eyes that charge and strike with lightning, a homing plasma ball, grenades
+  pushed aside, a teleport, a burst when it dies. Stukabat (`sc_stukabat.cpp`): climbs away and dives, biting.
+  All four after SevenKewp, rewritten on Half-Life's monster base. Sentries and turrets are summonable.
+- The town has a roadblock east of the centre: sandbags, a heavy weapons grunt and a robot grunt (first placed by
+  the rift, where its creepers blew them up before anyone arrived).
+- Fixed: a gargantua's flame made what it burned bleed every frame, about 15 blood sprites a hit, filling the 500
+  temporary entities (a burn no longer bleeds). The engine's overflow warning now says which model fills the list.
+  The heavy grunt asked for an angry idle his model hasn't got.
+- `sc_hurt <amount> <classname>` hurts every one of a kind; `tools/mdlinfo.py` lists a model's sequences,
+  activities and events.
+
+### Saving
+- Worlds are kept between sessions: the blocks and everything dug (the engine's network snapshot), every
+  player's inventory, ammo, health and position (given back by name), the furnaces with what is in them and how
+  far they got, the items lying around. Autosave every 2 minutes, at map end and with `sc_save`; `sc_newworld`
+  starts over. Tested: dig, build, carry, smelt, quit, start again: all of it back, the furnace still smelting.
+
+### Co-op over the network
+- Fixed: a player on another machine saw neither the block world nor the diggable town (its ground and
+  buildings): both lived only in the host's memory. The engine now sends a joining player a snapshot (the block
+  world and every carve so far, about 7.5 KB) and every change after it; their client loads the town's `.dyn`
+  itself. Tested with two copies on one PC (`tools/nettest.sh`): digging and building both ways, a late joiner,
+  a creeper's crater.
+
 ### One-command setup
 - `setup.bat` (`tools/setup.py`): from a fresh clone to a playable sandbox. It checks the prerequisites (finds
   Sven Co-op and its SDK in any Steam library), installs numpy and Pillow, fetches submodules, downloads SDL2,

@@ -109,6 +109,36 @@ as the story escalates.
   machine: no blood (sparks, a burst off the head), double damage from energy, four times from shock, Sven's VOX
   voice (RB_ sentences: `CHGrunt::Voice` lets a grunt kind speak another group); dead, it smokes and blows up a few
   seconds later (100), sooner if hit again, leaving metal parts.
+- **Baby gargantua** (`monster_babygarg`, in `gargantua.cpp`): the gargantua's settings (voice pitch, flame length and
+  beam widths, slash/flame/stomp damage) are members now; the baby is a small one (babygarg.mdl, 600 health, slash 25,
+  flame 2, stomp 50: Sven's `sk_babygargantua_*`), voice pitched to 180, flame 130 long, half-size eye glow, no
+  ground shake from its steps. Unlike its parent, bullets hurt it, it bleeds and it dies as a body (or gibs); its
+  model's kick (event 7) throws a player up and away. Fire doesn't make anyone bleed (a flame hits every frame).
+- **Tor** (`monster_alien_tor`, `sc_tor.cpp`, after SevenKewp's): an alien grunt commander, 800 health, armoured
+  (hit group 10: blows and rounds lose 20 there and ricochet). Far off he fires bursts of three green staff beams
+  (3 each, throwing the hit up), five bursts and a rest; resting, he opens a portal and an alien grunt drops through
+  (three at most). Near, he swings and stabs (55); two or more enemies close and he slams the ground: a shock ring
+  that throws everyone up (15, less further out).
+- **Kingpin** (`monster_kingpin`, `sc_kingpin.cpp`, after SevenKewp's): 450 health, head hits count as body hits.
+  Four eyes (front, back, sides) each charge for four seconds and strike a hostile in sight with magenta lightning
+  (25). From a distance it conjures a plasma ball that grows over it and hunts for eight seconds (80 in 300 units).
+  It swats (40), pushes enemies' grenades aside, and when crowded or out of sight fades out and reappears up to
+  1024 units away (a creature where it lands is torn apart, a player thrown clear and hurt 15). Dying, its eyes
+  flare into the ground and it bursts.
+- **Stukabat** (`monster_stukabat`, `sc_stukabat.cpp`, after SevenKewp's): a flyer, 123 health, flinching at
+  anything over 20. It climbs to the furthest open point it can see, folds its wings and dives at where its enemy
+  is going (up to 1000 units/s), bites (12), hovers, and climbs away again; killed, it falls and dies on the ground.
+  Flies the alien controller's way.
+- **Minecraft mobs** (`sc_mob.cpp` base, `sc_mobs.cpp`; models `tools/make_mobs.py`): zombie (100 health, a 15
+  swipe a second, arms out, groans; drops rotten flesh, rarely iron), skeleton (100; strafes 4-12 blocks off, draws
+  for a second and shoots arrows of 15-20 that drop with gravity, aimed ahead of you; drops bones, sometimes
+  crossbow bolts), spider (80, a 10 bite, leaps from 2-6 blocks, climbs walls, fits one-block gaps; drops string).
+  They come out of the rift (`sc_rift_mobs`, `sc_rift_interval`). Rotten flesh is food (10), bone and stick make
+  bolts, string strings a crossbow.
+- **Turrets**: Half-Life's `monster_sentry`, `monster_miniturret` and `monster_turret` are summonable (a turret
+  stands on its origin, its box reaching below the floor; `SC_PlaceCreature` sets it down as it is).
+- **In the town**: a roadblock across the main road east of the centre (sandbags, `monster_hwgrunt`,
+  `monster_robogrunt`), out of reach of the rift's creepers.
 - **Minigun** (`sc_minigun.cpp`, Sven Co-op's, hotbar item 147): +attack winds the barrels up for half a second,
   then fires 5.56 every 0.06 s; +attack2 keeps them spinning without firing; letting go winds them down. It slows
   the carrier (210, spinning 150). Predicted like the other guns (barrel state and timer in the weapon data).
@@ -158,6 +188,21 @@ as the story escalates.
   with 50 health for 50 charge (a fallen ally, such as Barney or a scientist, comes back whole: its own spawn again
   where it lies); a red cross marks fallen players for whoever holds a medkit, and a revive in progress holds off
   their respawn. The gibbed can't be revived.
+- **Saving** (`sc_save.cpp`; engine `common/scnet.c`): a map's world is kept in `run/svencraft/worlds/<map>/`:
+  `world.scw` (the blocks and every carve, the engine's snapshot) and `game.txt` (each player's inventory, ammo,
+  health, armour and where they stood, by name; the furnaces with their contents and progress; the items lying
+  around). Saved every `sc_autosave` seconds (120), when the map ends and on `sc_save`; a map with a kept world
+  starts from it instead of generating one (loaded carves go back into the network journal, so joining players
+  get them). `sc_newworld` puts the world aside (`.old`) and starts the map with a new one; `sc_worldsave 0` turns
+  it all off (the test runners do, unless `WORLDSAVE=1`). Not kept yet: monsters, wrecked cars and broken glass,
+  the map's own pickups (they come back with the map).
+- **The world over the network** (engine `common/scnet.c`, `client/cl_scnet.c`): the host's own client shares the
+  server's memory, but a friend's machine has its own engine. Its client loads `maps/<map>.dyn` itself; entering
+  the game it gets a snapshot (the block world, every block id's flags, and every carve in the diggable geometry
+  since the map loaded, bzip2-packed: about 7.5 KB for the sandbox) through the netchan's file stream, held still
+  ("Receiving the world...") until it has it; every change after that comes as a numbered `svc_scworld` message
+  (block set, fill, flags, carve), changes that overtake the snapshot waiting for it. The same snapshot is what
+  saving keeps. `tools/nettest.sh` runs a host and a second, connecting copy on one PC.
 - **Co-op rules**: a hosted game is co-op (Half-Life's rules, `coop 1`): Svencraft's own `listenserver.cfg` /
   `server.cfg` replace Sven's, which set deathmatch (and the engine turns deathmatch on for more than one player
   unless coop is set); `motd.txt` is ours. The dead wait at their bodies (no death camera, no forced respawn)
@@ -276,4 +321,5 @@ renderer features (the engine and renderer are ours, so these can go straight in
   new world each map load).
 - Asset generators: `make_blocktex.py` (block textures, blocks.txt) -> `make_blockassets.py` -> `make_items.py`
   (items, icons, flat drop model) -> `make_hand.py` (the hand view model); `make_tools.py` (tool models from
-  Sven's crowbar via `toolmdl.py`), `make_creeper.py`, `make_font.py`, `make_skillcfg.py`.
+  Sven's crowbar via `toolmdl.py`), `make_creeper.py`, `make_font.py`, `make_skillcfg.py`. `mdlinfo.py` lists a
+  model's sequences, activities and animation events (what a monster's code has to handle).

@@ -721,11 +721,16 @@ for x in (-1050, -500):
     prop('models/ginsmodels/bench3.mdl', x, 300, yaw=270, z=8)
 prop('models/snd/sandbags_straight.mdl', 760, 520, yaw=60, z=None)
 prop('models/snd/sandbags_curved.mdl', 820, 610, yaw=20, z=None)
+prop('models/snd/sandbags_straight.mdl', 1340, -50, yaw=0, z=None)    # the roadblock (MONSTERS)
+prop('models/snd/sandbags_straight.mdl', 1340, 80, yaw=0, z=None)
 
 # the monsters already in the town at the start (spawned below)
 MONSTERS = (('monster_zombie', -1000, 600, 270), ('monster_headcrab', -500, 520, 0), ('monster_headcrab', -1110, -470, 90),
            ('monster_zombie', -930, -460, 90), ('monster_houndeye', 660, 860, 180), ('monster_houndeye', 700, 940, 200),
-           ('monster_zombie', 620, -640, 150), ('monster_headcrab', 680, 420, 200), ('monster_bullchicken', -200, 1100, 270))
+           ('monster_zombie', 620, -640, 150), ('monster_headcrab', 680, 420, 200), ('monster_bullchicken', -200, 1100, 270),
+           # a roadblock across the main road east of town, facing it: Sven Co-op's heavy and robot grunts (out of
+           # the rift's creepers' sight, or they'd be blown up before anyone got there)
+           ('monster_hwgrunt', 1420, -40, 180), ('monster_robogrunt', 1440, 70, 180))
 
 # ---------------------------------------------------------------- the rift
 ents.append(entity({'classname': 'info_sc_rift', 'origin': '%d %d 0' % (RIFT[0], RIFT[1]), 'radius': str(RIFT[2]), 'height': '72'}))

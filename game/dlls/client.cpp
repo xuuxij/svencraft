@@ -107,6 +107,8 @@ void ClientDisconnect( edict_t *pEntity )
 	if( g_fGameOver )
 		return;
 
+	SC_SavePlayerLeft( (CBasePlayer *)CBaseEntity::Instance( pEntity ));	// Svencraft: kept for when they come back
+
 	char text[256] = "";
 	if( pEntity->v.netname )
 		safe_snprintf( text, sizeof( text ), "- %s has left the game\n", STRING( pEntity->v.netname ));
@@ -732,6 +734,8 @@ void ServerDeactivate( void )
 
 	g_serveractive = 0;
 
+	SC_SaveWorld( "the map ends" );	// Svencraft: the world is kept (svencraft/sc_save.cpp)
+
 	// Peform any shutdown operations here...
 	//
 }
@@ -834,6 +838,7 @@ void StartFrame( void )
 	SC_FurnaceFrame();	// Svencraft: furnaces smelt whether or not anyone watches
 	SC_LagCompFrame();	// Svencraft: where the monsters were, for players' shots (sc_lagcomp.cpp)
 	SC_BotsFrame();		// Svencraft: sc_bot's stand-in players make their moves (sc_bots.cpp)
+	SC_SaveFrame();		// Svencraft: the autosave (sc_save.cpp)
 
 	if( g_fGameOver )
 		return;

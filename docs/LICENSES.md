@@ -15,6 +15,7 @@ or shared, the points marked **decide** need the owner's decision.
 | `game/dlls/svencraft/sc_lagcomp.cpp` | Half-Life SDK licence | adapted from SevenKewp (`dlls/util/lagcomp.cpp`, https://github.com/wootguy/SevenKewp) |
 | `game/dlls/svencraft/sc_medkit.cpp` | Half-Life SDK licence | adapted from SevenKewp (`dlls/weapon/CMedkit.cpp`); values from SevenKewp_data's `skill.cfg` |
 | `game/dlls/svencraft/sc_hwgrunt.cpp`, `sc_robogrunt.cpp` | Half-Life SDK licence | written on Half-Life's `CHGrunt` after SevenKewp's `CHWGrunt` / `CRoboGrunt` |
+| `game/dlls/svencraft/sc_tor.cpp`, `sc_kingpin.cpp`, `sc_stukabat.cpp`; `CBabyGarg` in `game/dlls/gargantua.cpp` | Half-Life SDK licence | rewritten on Half-Life's `CBaseMonster` / `CGargantua` after SevenKewp's `CTor`, `CKingpin`, `CStukabat`, `CBabyGarg` |
 | `game/dlls/svencraft/`, `game/cl_dll/svencraft/`, `game/common/sc_*.h` (otherwise) | ours, inside an HL-SDK-licensed work | as part of the game DLLs they must follow the HL SDK licence's terms when distributed |
 | `tools/`, `maps_src/`, `assets_src/`, `legacy/`, docs, `run/svencraft` text files | ours | **decide**: until then, all rights reserved (private) |
 | Generated art (block textures, item icons, the creeper, the font, HUD sprites in `run/svencraft/sprites/svencraft/`) | ours (procedural, drawn in code) | **decide** together with the code |
