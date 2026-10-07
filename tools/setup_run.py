@@ -59,10 +59,10 @@ copy_once(os.path.join(SVEN, 'sound', 'default_sentences.txt'), os.path.join(GAM
 
 for exe in ('xash3d.exe', 'xash.dll', 'ref_gl.dll', 'menu.dll', 'filesystem_stdio.dll', 'SDL2.dll', 'mdldec.exe'):
     if not os.path.isfile(os.path.join(RUN, exe)):
-        todo.append('run/%s: extract the engine package into run/, then tools/build.sh engine' % exe)
+        todo.append('run/%s: setup.bat (builds the engine)' % exe)
 for rel in ('dlls/hl_amd64.dll', 'cl_dlls/client_amd64.dll'):
     if not os.path.isfile(os.path.join(GAME, *rel.split('/'))):
-        todo.append('run/svencraft/%s: tools/build.sh game' % rel)
+        todo.append('run/svencraft/%s: setup.bat (or tools/build.sh game)' % rel)
 for rel, tool in (('scripts/blocks.txt', 'make_blocktex.py'), ('models/svencraft/blockitem.mdl', 'make_blockassets.py'),
                   ('sprites/svencraft/items.spr', 'make_items.py'), ('models/svencraft/v_schand.mdl', 'make_hand.py'),
                   ('models/svencraft/v_scpickaxe1.mdl', 'make_tools.py'), ('models/svencraft/creeper.mdl', 'make_creeper.py'),

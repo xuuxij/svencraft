@@ -73,3 +73,6 @@ waf3-*/
 
 # Export bookkeeping (staging folder only)
 /.export/
+
+# setup.bat writes its output here
+/setup.log

@@ -12,6 +12,7 @@
 + DEVLOG.md
 + DESIGN.md
 + Play Svencraft.bat
++ setup.bat
 + .gitignore
 + .gitattributes
 

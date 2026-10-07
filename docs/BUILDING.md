@@ -2,6 +2,15 @@
 
 Windows x64 only for now. Commands are for Git Bash from the project root unless they say otherwise.
 
+**The short way:** install the prerequisites below (Sven Co-op and its SDK, the Visual Studio C++ build tools,
+Python 3, Git), clone with `--recursive`, and run `setup.bat` (`tools/setup.py`). It finds Sven Co-op and the SDK
+in any Steam library, installs numpy and Pillow, fetches missing submodules, downloads SDL2 into `deps/SDL2_VC`,
+configures and builds the engine (with `--enable-utils` for `mdldec.exe`) and the game, copies what they make into
+`run/` (`xash3d.exe`, `xash.dll`, `ref_gl.dll`, `menu.dll`, `filesystem_stdio.dll`, `mdldec.exe`, `SDL2.dll`,
+`svencraft/extras.pk3`, the game DLLs), runs `tools/setup_run.py`, then every generator below whose output is
+missing, ending with the map. Again with `--rebuild` it redoes everything; `--check` only checks. The rest of this
+page is what it does, step by step.
+
 ## Prerequisites
 
 | What | Why | Notes |
@@ -11,19 +20,17 @@ Windows x64 only for now. Commands are for Git Bash from the project root unless
 | Git for Windows (Git Bash) | clone, the `.sh` scripts | |
 | Sven Co-op (Steam app 225840, free) | the content the game runs on | the game reads it through `run/svencoop` |
 | Sven Co-op SDK (Steam, Tools) | `modelling/studiomdl.exe`, `sprites/sprgen.exe`, `mapping/compilers/SC-*.exe` | |
-| SDL2 dev package for VC (`SDL2-devel-2.32.10-VC.zip`) | engine build | unpack into `deps/`, rename the folder to `SDL2_VC` |
-| Xash3D FWGS Windows build (`xash3d-fwgs-win32-amd64.7z`) | runtime files we do not build: `xash3d.exe`, `SDL2.dll`, `menu.dll`, `filesystem_stdio.dll`, FFmpeg DLLs, `mdldec.exe`, `valve/extras.pk3` | from the `continuous` release of FWGS/xash3d-fwgs; extract so `xash3d.exe` sits directly in `run/` |
+| SDL2 dev package for VC (`SDL2-devel-2.32.10-VC.zip`) | engine build, `SDL2.dll` | unpack into `deps/`, rename the folder to `SDL2_VC` (`setup.bat` does it) |
+| (optional) Xash3D FWGS Windows build (`xash3d-fwgs-win32-amd64.7z`) | only its FFmpeg DLLs (intro videos); our engine build makes everything else it holds | from the `continuous` release of FWGS/xash3d-fwgs |
 
 Sven Co-op and the SDK are expected in Steam's default library. If they are elsewhere, set (in the shell or
 Windows' environment) `SVENCRAFT_SVEN` to the `...\Sven Co-op\svencoop` folder and `SVENCRAFT_SDK` to the
 `...\Sven Co-op SDK` folder. `python tools/sc_paths.py` prints what the tools will use.
 
 ```sh
-mkdir -p deps dl
+mkdir -p deps
 curl -L -o deps/SDL2.zip https://github.com/libsdl-org/SDL/releases/download/release-2.32.10/SDL2-devel-2.32.10-VC.zip
 (cd deps && unzip -q SDL2.zip && mv SDL2-2.32.10 SDL2_VC)
-gh release download continuous -R FWGS/xash3d-fwgs -p xash3d-fwgs-win32-amd64.7z -D dl
-# extract dl/xash3d-fwgs-win32-amd64.7z into run/ with 7-Zip (or: python -m pip install py7zr; python -m py7zr x dl/xash3d-fwgs-win32-amd64.7z run)
 ```
 
 ## Fresh checkout setup
@@ -35,7 +42,8 @@ python tools/setup_run.py        # report + create what is missing; safe to re-r
 ```
 
 `setup_run.py` creates the folders the generators write into, the `run/svencoop` junction to your Sven Co-op
-content, `run/svencraft/extras.pk3` (from the engine package's `run/valve/`), and copies Sven Co-op's
+content, `run/svencraft/extras.pk3` (from `run/valve/` when an engine package is there; `setup.bat` copies the
+engine build's own), and copies Sven Co-op's
 `sprites/pain.spr` to `run/svencraft/sprites/640_pain.spr` / `320_pain.spr` (the HUD damage indicator) and its
 `sound/default_sentences.txt` to `run/svencraft/sound/sentences.txt` (the name the engine and the game read the
 spoken sentences from). It never overwrites anything and lists what is still missing.
@@ -43,7 +51,7 @@ spoken sentences from). It never overwrites anything and lists what is still mis
 ## Engine and game
 
 ```sh
-cd engine && python waf configure -T release -8 --msvc_targets=x64 -s ../deps/SDL2_VC && cd ..
+cd engine && python waf configure -T release -8 --msvc_targets=x64 -s ../deps/SDL2_VC --enable-utils && cd ..
 cd game   && python waf configure -T release -8 --msvc_targets=x64 --prefix=../run && cd ..
 sh tools/build.sh engine game     # or just: sh tools/build.sh   (= game)
 ```

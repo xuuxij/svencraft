@@ -37,6 +37,7 @@ Half-Life-style town over a generated block world with caves and a rift). Workin
 ```
 DESIGN.md              vision, campaign arc, feature notes (the design reference)
 DEVLOG.md              what happened when, newest first
+setup.bat              one command: builds everything and generates the assets (tools/setup.py)
 Play Svencraft.bat     launches the sandbox from run/
 docs/                  BUILDING, TESTING, UPSTREAM, LICENSES, PUBLISHING, REFERENCES, realism and town plans
 engine/                Xash3D FWGS fork (upstream clone + our changes; 3rdparty/* are git submodules)
@@ -49,41 +50,50 @@ run/                   runtime folder: engine package + built DLLs + run/svencra
                        (a junction to your Sven Co-op content). Only run/svencraft's hand-kept files are tracked.
 ```
 
-## Requirements
+## Playing it (one command)
 
-- Windows 10/11 x64
-- Visual Studio Build Tools with the C++ workload (MSVC; built with VS 2019 Build Tools, MSVC 16.11)
-- Python 3 (3.11 used) with `numpy` and `Pillow`; Git (with Git Bash for the `.sh` scripts)
-- [Sven Co-op](https://store.steampowered.com/app/225840/) (free on Steam) and the Sven Co-op SDK (Steam: Tools)
-  for `studiomdl`, `sprgen` and the map compilers
-- SDL2 development package for Visual C++ (SDL 2.32.10 used) and the Xash3D FWGS Windows build
-  (`xash3d-fwgs-win32-amd64.7z`) for the runtime files we do not build
+Windows 10/11 x64. Install these first (all free):
 
-## Quick start
+1. **Sven Co-op** from Steam, and the **Sven Co-op SDK** (Steam: Library > Tools > "Sven Co-op SDK"). The game
+   reads Sven's models, sounds and textures from your install; the SDK compiles the models and the map.
+2. **Build Tools for Visual Studio** (https://visualstudio.microsoft.com/downloads/, under "Tools for Visual
+   Studio") with the **"Desktop development with C++"** workload.
+3. **Python 3** (https://www.python.org/downloads/; tick "Add python.exe to PATH").
+4. **Git for Windows** (https://git-scm.com/download/win).
 
-From a clone made with `git clone --recursive` (the engine's and game's submodules are needed). Details and
-troubleshooting: [docs/BUILDING.md](docs/BUILDING.md).
+Then:
 
 ```sh
-# 1. third-party pieces (not in the repo)
-#    deps/SDL2_VC  <- SDL2-devel-2.32.10-VC.zip, unpacked and renamed
-#    run/          <- the contents of xash3d-fwgs-win32-amd64.7z (xash3d.exe, SDL2.dll, menu.dll, valve/, ...)
-# 2. engine and game (run from a VS x64 developer prompt or let waf find MSVC)
-cd engine && python waf configure -T release -8 --msvc_targets=x64 -s ../deps/SDL2_VC && cd ..
+git clone --recursive https://github.com/xuuxij/svencraft.git
+```
+
+and double-click **`setup.bat`** in the `svencraft` folder. It checks the prerequisites (it finds Sven Co-op in
+any Steam library), installs numpy and Pillow, downloads SDL2, builds the engine and the game, and generates the
+assets and the sandbox map: about 10-20 minutes the first time, with a log in `setup.log`. When it says it is
+ready, double-click **`Play Svencraft.bat`**.
+
+Run `setup.bat` again after pulling changes (`git pull`, then `git submodule update --init --recursive`): it
+only redoes what is missing; `setup.bat --rebuild` rebuilds and regenerates everything, `setup.bat --check` only
+checks the prerequisites. If Sven Co-op or the SDK cannot be found, set `SVENCRAFT_SVEN` (the `...\svencoop`
+folder) or `SVENCRAFT_SDK`.
+
+## Building by hand
+
+The steps `setup.bat` runs, for development (details and troubleshooting: [docs/BUILDING.md](docs/BUILDING.md)):
+
+```sh
+# engine (needs deps/SDL2_VC: SDL2-devel-2.32.10-VC.zip, unpacked and renamed) and game; waf finds MSVC
+cd engine && python waf configure -T release -8 --msvc_targets=x64 -s ../deps/SDL2_VC --enable-utils && cd ..
 cd game   && python waf configure -T release -8 --msvc_targets=x64 --prefix=../run && cd ..
-python tools/setup_run.py            # run/ folders, the run/svencoop junction, Sven's pain sprite and sentences, extras.pk3
-sh tools/build.sh engine game        # builds both and installs the DLLs into run/
-# 3. generated assets (order matters for the first four), then the map
+sh tools/build.sh engine game        # builds both and installs the DLLs into run/ (setup.bat also installs
+                                     # xash3d.exe, menu.dll, filesystem_stdio.dll, mdldec.exe, SDL2.dll, extras.pk3)
+python tools/setup_run.py            # run/ folders, the run/svencoop junction, Sven's pain sprite and sentences
+# generated assets (order matters for the first four), then the map
 python tools/make_blocktex.py && python tools/make_blockassets.py && python tools/make_items.py && python tools/make_hand.py
 python tools/make_tools.py && python tools/make_creeper.py && python tools/make_font.py
 python tools/make_materials.py && python tools/make_skillcfg.py
 python maps_src/make_town.py         # a few minutes: compiles svencraft_sandbox with the SDK compilers
-# 4. play
-"Play Svencraft.bat"
 ```
-
-Paths are found from the checkout itself; when Sven Co-op or its SDK are not in Steam's default library, set
-`SVENCRAFT_SVEN` / `SVENCRAFT_SDK` (see `tools/sc_paths.py`).
 
 ## Documentation
 

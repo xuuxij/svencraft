@@ -6,6 +6,14 @@ dates and the build history.
 
 ## 2026-10-07
 
+### One-command setup
+- `setup.bat` (`tools/setup.py`): from a fresh clone to a playable sandbox. It checks the prerequisites (finds
+  Sven Co-op and its SDK in any Steam library), installs numpy and Pillow, fetches submodules, downloads SDL2,
+  builds the engine (now including the launcher, menu, filesystem and model decompiler, so the Xash3D release
+  package is no longer needed) and the game, prepares `run/`, and runs every generator and the map compile;
+  again it only redoes what is missing. Tested from a fresh clone of the GitHub repo.
+- Published the private GitHub repo `xuuxij/svencraft`.
+
 ### Atmosphere
 - Fog: `env_fog` (Sven's keys) and `sc_fog`; the town and block renderers fog their light passes correctly; the
   sandbox town gets a light distance haze.
